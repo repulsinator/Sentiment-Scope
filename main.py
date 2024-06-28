@@ -10,11 +10,26 @@ def analyze_sentiment():
     # Extract text from JSON request body
     text = request.get_json()['text']
 
-    # Perform sentiment analysis with TextBlobp
+    # Perform sentiment analysis with TextBlob
     blob = TextBlob(text)
+    polarity = blob.sentiment.polarity
+
+    # Calculate positive and negative percentages
+    if polarity > 0:
+        positive_percentage = polarity * 100
+        negative_percentage = 0
+    elif polarity < 0:
+        positive_percentage = 0
+        negative_percentage = abs(polarity) * 100
+    else:  # polarity == 0
+        positive_percentage = 50
+        negative_percentage = 50
+
     sentiment = {
-        'polarity': blob.sentiment.polarity,
-        'subjectivity': blob.sentiment.subjectivity
+        'polarity': polarity,
+        'subjectivity': blob.sentiment.subjectivity,
+        'positive_percentage': positive_percentage,
+        'negative_percentage': negative_percentage
     }
 
     return jsonify(sentiment), 200  # Return JSON response with status code
