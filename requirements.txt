@@ -1,3 +1,4 @@
 Flask
 TextBlob
 gunicorn
+flask_cors
