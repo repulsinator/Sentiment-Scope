@@ -1,5 +1,4 @@
 
-readme_content = """
 # Sentiment Scope
 
 ## Overview
